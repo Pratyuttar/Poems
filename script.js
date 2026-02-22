@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
       el.style.setProperty("--ty", `${dy}px`);
 
       requestAnimationFrame(() => {
-        el.style.transition = "transform 500ms ease, opacity 500ms ease";
+        el.style.transition = "transform 400ms ease, opacity 400ms ease";
         el.style.setProperty("--tx", "0px");
         el.style.setProperty("--ty", "0px");
       });
@@ -119,18 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
       el.classList.toggle("active", activeFilters[t] === v);
     });
 
-    const allImgs = Array.from(document.querySelectorAll(".imgcrop1"));
-
-    Promise.all(
-      allImgs.map((img) => {
-        if (img.complete) return Promise.resolve();
-        return new Promise((resolve) =>
-          img.addEventListener("load", resolve, { once: true }),
-        );
-      }),
-    ).then(() => {
-      requestAnimationFrame(() => applyFilters());
-    });
+    requestAnimationFrame(() => applyFilters());
   }
 
   // attach click + keyboard handlers to filter items
@@ -153,18 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // initial apply (show all)
-  const allImgs = Array.from(document.querySelectorAll(".imgcrop1"));
-
-  Promise.all(
-    allImgs.map((img) => {
-      if (img.complete) return Promise.resolve();
-      return new Promise((resolve) =>
-        img.addEventListener("load", resolve, { once: true }),
-      );
-    }),
-  ).then(() => {
-    requestAnimationFrame(() => applyFilters());
-  });
+  requestAnimationFrame(() => applyFilters());
 
   // --- image hover scaling logic (unchanged except uses imageEls) ---
   document.querySelectorAll(".images").forEach((el) => {
