@@ -91,24 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
-  function updateCategoryBadges() {
-    document.querySelectorAll(".cat").forEach((cat) => {
-      const header = cat.querySelector(".sideDom");
-      if (!header) return;
-
-      const activeCount = cat.querySelectorAll(".sideSub.active").length;
-
-      let badge = header.querySelector(".badge");
-      if (!badge) {
-        badge = document.createElement("span");
-        badge.className = "badge";
-        header.appendChild(badge);
-      }
-
-      badge.textContent = activeCount;
-      header.classList.toggle("has-badge", activeCount > 0);
-    });
-  }
+ 
   // toggle filter helper
   function toggleFilter(type, value) {
     if (activeFilters[type] === value) delete activeFilters[type];
@@ -176,3 +159,4 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
