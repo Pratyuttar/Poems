@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Poems</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      .imgcrop1 {
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+      }
+      .imgcrop1.loaded {
+        opacity: 1;
+      }
+    </style>
+  </head>
+
+  <body>
+    <section class="banner">
+      <img
+        class="imgcrop"
+        src="images/a.jpg"
+        alt="Poems banner image"
+        loading="eager"
+      />
+      <div class="overlay">
+        <div id="bannername">
+          <h1>Poems</h1>
+        </div>
+        <div id="sidebar" onmouseover="category()" onmouseout="sideIcon()">
+          <i class="fa-brands fa-fulcrum" id="sideButton"></i>
+          <div class="cat">
+            <p class="sideDom"><span class="arrow">> </span>Aesthetic</p>
+            <div class="dropDown">
+              <p class="sideSub" data-filter="aesthetic:black">Black</p>
+              <p class="sideSub" data-filter="aesthetic:vintage">Vintage</p>
+              <p class="sideSub" data-filter="aesthetic:colorful">Colorful</p>
+            </div>
+          </div>
+          <div class="cat">
+            <p class="sideDom"><span class="arrow">> </span> Style</p>
+            <div class="dropDown">
+              <p class="sideSub" data-filter="style:existential">Existential</p>
+              <p class="sideSub" data-filter="style:romantic">Romantic</p>
+              <p class="sideSub" data-filter="style:self">Self</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content">
+      <div class="parts">
+        <div class="images" data-aesthetic="vintage" data-style="self">
+          <img
+            class="imgcrop1"
+            src="images/1.jpg"
+            alt="Poem image 1"
+            loading="lazy"
+          />
+        </div>
+        <div class="images" data-aesthetic="black" data-style="romantic">
+          <img
+            class="imgcrop1"
+            src="images/2.png"
+            alt="Poem image 2"
+            loading="lazy"
+          />
+        </div>
+        <div class="images" data-aesthetic="black" data-style="existential">
+          <img
+            class="imgcrop1"
+            src="images/3.png"
+            alt="Poem image 3"
+            loading="lazy"
+          />
+        </div>
+        <div class="images" data-aesthetic="black" data-style="romantic">
+          <img
+            class="imgcrop1"
+            src="images/4.png"
+            alt="Poem image 4"
+            loading="lazy"
+          />
+        </div>
+        <div class="images" data-aesthetic="black" data-style="romantic">
+          <img
+            class="imgcrop1"
+            src="images/5.png"
+            alt="Poem image 5"
+            loading="lazy"
+          />
+        </div>
+        <div class="images" data-aesthetic="black" data-style="self">
+          <img
+            class="imgcrop1"
+            src="images/6.png"
+            alt="Poem image 6"
+            loading="lazy"
+          />
+        </div>
+        <div class="images" data-aesthetic="black" data-style="self">
+          <img
+            class="imgcrop1"
+            src="images/7.png"
+            alt="Poem image 7"
+            loading="lazy"
+          />
+        </div>
+        <div class="images" data-aesthetic="black" data-style="self">
+          <img
+            class="imgcrop1"
+            src="images/8.png"
+            alt="Poem image 8"
+            loading="lazy"
+          />
+        </div>
+        <div class="images" data-aesthetic="black" data-style="romantic">
+          <img
+            class="imgcrop1"
+            src="images/9.png"
+            alt="Poem image 9"
+            loading="lazy"
+          />
+        </div>
+        <div class="images" data-aesthetic="black" data-style="existential">
+          <img
+            class="imgcrop1"
+            src="images/10.png"
+            alt="Poem image 10"
+            loading="lazy"
+          />
+        </div>
+        <div class="images" data-aesthetic="colorful" data-style="existential">
+          <img
+            class="imgcrop1"
+            src="images/11.jpg"
+            alt="Poem image 11"
+            loading="lazy"
+          />
+        </div>
+        <div class="images" data-aesthetic="colorful" data-style="existential">
+          <img
+            class="imgcrop1"
+            src="images/12.png"
+            alt="Poem image 12"
+            loading="lazy"
+          />
+        </div>
+
+        <div class="images" data-aesthetic="colorful" data-style="existential">
+          <img
+            class="imgcrop1"
+            src="images/14.jpg"
+            alt="Poem image 14"
+            loading="lazy"
+          />
+        </div>
+        <div class="images" data-aesthetic="colorful" data-style="romantic">
+          <img
+            class="imgcrop1"
+            src="images/15.png"
+            alt="Poem image 15"
+            loading="lazy"
+          />
+        </div>
+        <div class="images" data-aesthetic="colorful" data-style="self">
+          <img
+            class="imgcrop1"
+            src="images/16.jpg"
+            alt="Poem image 16"
+            loading="lazy"
+          />
+        </div>
+        <div class="images" data-aesthetic="black" data-style="self">
+          <img
+            class="imgcrop1"
+            src="images/17.png"
+            alt="Poem image 17"
+            loading="lazy"
+          />
+        </div>
+        <div class="images" data-aesthetic="colorful" data-style="self">
+          <img
+            class="imgcrop1"
+            src="images/18.png"
+            alt="Poem image 18"
+            loading="lazy"
+          />
+        </div>
+        <div class="images" data-aesthetic="black" data-style="self">
+          <img
+            class="imgcrop1"
+            src="images/19.png"
+            alt="Poem image 19"
+            loading="lazy"
+          />
+        </div>
+        <div class="images" data-aesthetic="black" data-style="self">
+          <img
+            class="imgcrop1"
+            src="images/20.png"
+            alt="Poem image 20"
+            loading="lazy"
+          />
+        </div>
+        <div class="images" data-aesthetic="vintage" data-style="romantic">
+          <img
+            class="imgcrop1"
+            src="images/21.png"
+            alt="Poem image 21"
+            loading="lazy"
+          />
+        </div>
+        <div class="images" data-aesthetic="colorful" data-style="romantic">
+          <img
+            class="imgcrop1"
+            src="images/22.jpeg"
+            alt="Poem image 22"
+            loading="lazy"
+          />
+        </div>
+        <div class="images" data-aesthetic="colorful" data-style="existential">
+          <img
+            class="imgcrop1"
+            src="images/23.jpeg"
+            alt="Poem image 23"
+            loading="lazy"
+          />
+        </div>
+        <div class="images" data-aesthetic="colorful" data-style="romantic">
+          <img
+            class="imgcrop1"
+            src="images/24.jpeg"
+            alt="Poem image 24"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </section>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,256 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+@font-face {
+  font-family: typewriter;
+  src: url("font/typewriter/1942.ttf");
+}
+@font-face {
+  font-family: grided2;
+  src: url(font/grid/R&C-Demo.otf);
+}
+body {
+  background: #323232;
+  color: #111;
+  font-family: typewriter;
+}
+
+/* ================= Banner ================= */
+.banner {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.imgcrop {
+  width: 100%;
+  height: clamp(300px, 55vh, 600px);
+  object-fit: cover;
+  transition: transform 0.5s ease;
+  object-position: clamp(20%, 50vw, 100%) clamp(80%, 50vh, 100%);
+}
+
+.banner:hover .imgcrop {
+  transform: scale(1.03);
+}
+
+.overlay {
+  position: absolute;
+  top: 0%;
+  left: 0;
+  padding-left: 25px;
+  width: 100%;
+  height: clamp(300px, 55vh, 600px);
+
+  color: rgb(198, 198, 198);
+
+  font-size: clamp(1.35rem, 3vw, 2.7rem);
+  font-weight: 400;
+  background: transparent;
+  transition: background 0.3s ease;
+  pointer-events: none;
+}
+
+#bannername {
+  position: absolute;
+  bottom: 7%;
+}
+
+/* sidebar base */
+#sidebar {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 60px;
+  height: 100%;
+  padding: 10px;
+  pointer-events: auto;
+  overflow: hidden;
+  transition: width 0.3s ease;
+  font-size: clamp(1.35rem, 1.7vw, 2.7rem);
+  z-index: 999;
+}
+
+#sidebar:hover {
+  width: 280px;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
+}
+.fa-fulcrum {
+  font-size: 40px;
+  margin-right: 10px;
+}
+/* headers hidden initially */
+.sideDom {
+  opacity: 0;
+  cursor: pointer;
+  color: #f5f5f5;
+  padding: 6px;
+  transition: opacity 0.25s ease;
+  user-select: none;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+#sidebar:hover .sideDom {
+  opacity: 1;
+}
+
+/* arrow */
+.arrow {
+  display: inline-block;
+  margin-right: 6px;
+  transition: transform 0.3s ease;
+}
+
+/* dropdown container */
+.dropDown {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+/* dropdown items */
+.dropDown p {
+  opacity: 0;
+  transform: translateX(-15px);
+  color: #ddd;
+  padding: 4px 6px 4px 30px;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+/* OPEN state */
+.cat:not(.active) .dropDown {
+  max-height: 200px;
+}
+
+.cat:not(.active) .dropDown p {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* stagger */
+.cat:not(.active) .dropDown p:nth-child(1) {
+  transition-delay: 0.08s;
+}
+.cat:not(.active) .dropDown p:nth-child(2) {
+  transition-delay: 0.16s;
+}
+.cat:not(.active) .dropDown p:nth-child(3) {
+  transition-delay: 0.24s;
+}
+
+/* arrow rotate when open */
+.cat:not(.active) .arrow {
+  transform: rotate(90deg);
+}
+#sideButton {
+  margin-bottom: 5px;
+}
+
+.sideSub {
+  margin-left: 7px;
+  pointer-events: auto;
+  cursor: pointer;
+}
+.sideSub.active {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-weight: 600;
+  border-radius: 1px;
+}
+
+.content {
+  position: relative;
+  margin: 2px;
+}
+.parts {
+  display: grid;
+  gap: 2px;
+
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+}
+
+.images {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 9/16;
+  cursor: pointer;
+  --scale: 1;
+  will-change: transform;
+  transition:
+    transform 160ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    box-shadow 120ms ease-out,
+    opacity 250ms ease,
+    transform 250ms ease;
+}
+
+.images.hidden {
+  opacity: 0;
+  transform: scale(0.96);
+  pointer-events: none;
+  box-shadow: none;
+
+  position: absolute; /* REMOVE from grid flow */
+  height: 0;
+  overflow: hidden;
+
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.images.hidden:hover {
+  transform: scale(0.96);
+  box-shadow: none;
+}
+
+.images:hover {
+  z-index: 2;
+  transform: scale(var(--scale));
+  /* transform: scale(1.08); */
+  box-shadow:
+    50px 50px 100px rgb(5, 5, 5),
+    -50px -50px 100px rgb(5, 5, 5);
+}
+
+.imgcrop1 {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 1;
+  transition:
+    transform 0.25s ease,
+    opacity 0.45s ease;
+}
+
+.imgcrop1:not(.loaded) {
+  opacity: 0; /* only hide before JS marks loaded */
+}
+
+.images:hover .imgcrop1 {
+  transform: scale(var(--scale));
+}
+.imgcrop1.loaded {
+  opacity: 1;
+}
+
+@media (max-width: 480px) {
+  .images {
+    aspect-ratio: auto;
+  }
+  .imgcrop1 {
+    object-fit: contain;
+    height: auto;
+  }
+}
