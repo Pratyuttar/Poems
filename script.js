@@ -47,15 +47,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // apply filters to images
   function applyFilters() {
-    // 1. Record positions ONLY for currently visible elements
-    const firstPositions = new Map();
+    const first = new Map();
+
+    // 1️⃣ Measure current positions (only visible ones)
     imageEls.forEach((el) => {
       if (getComputedStyle(el).display !== "none") {
-        firstPositions.set(el, el.getBoundingClientRect());
+        first.set(el, el.getBoundingClientRect());
       }
     });
 
-    // 2. Apply filter (instant layout change)
+    // 2️⃣ Apply visibility (display + fade state)
     imageEls.forEach((img) => {
       let visible = true;
 
@@ -70,28 +71,43 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
 
-      img.style.display = visible ? "" : "none";
-    });
-
-    // 3. Animate ONLY elements that existed before
-    firstPositions.forEach((first, el) => {
-      const last = el.getBoundingClientRect();
-
-      const dx = first.left - last.left;
-      const dy = first.top - last.top;
-
-      if (dx || dy) {
-        el.style.transition = "none";
-        el.style.transform = `translate(${dx}px, ${dy}px)`;
-
-        requestAnimationFrame(() => {
-          el.style.transition = "transform 600ms ease";
-          el.style.transform = "";
-        });
+      if (!visible) {
+        img.classList.add("hidden");
+        img.style.display = "none";
+      } else {
+        img.style.display = "";
+        img.classList.remove("hidden");
       }
     });
+
+    // 3️⃣ Force layout
+    void document.body.offsetHeight;
+
+    // 4️⃣ Animate movement using CSS variables (NOT transform overwrite)
+    imageEls.forEach((el) => {
+      if (getComputedStyle(el).display === "none") return;
+
+      const last = el.getBoundingClientRect();
+      const prev = first.get(el);
+
+      if (!prev) return;
+
+      const dx = prev.left - last.left;
+      const dy = prev.top - last.top;
+
+      if (!dx && !dy) return;
+
+      el.style.transition = "none";
+      el.style.setProperty("--tx", `${dx}px`);
+      el.style.setProperty("--ty", `${dy}px`);
+
+      requestAnimationFrame(() => {
+        el.style.transition = "transform 500ms ease, opacity 500ms ease";
+        el.style.setProperty("--tx", "0px");
+        el.style.setProperty("--ty", "0px");
+      });
+    });
   }
- 
   // toggle filter helper
   function toggleFilter(type, value) {
     if (activeFilters[type] === value) delete activeFilters[type];
@@ -103,7 +119,18 @@ document.addEventListener("DOMContentLoaded", () => {
       el.classList.toggle("active", activeFilters[t] === v);
     });
 
-    applyFilters();
+    const allImgs = Array.from(document.querySelectorAll(".imgcrop1"));
+
+    Promise.all(
+      allImgs.map((img) => {
+        if (img.complete) return Promise.resolve();
+        return new Promise((resolve) =>
+          img.addEventListener("load", resolve, { once: true }),
+        );
+      }),
+    ).then(() => {
+      requestAnimationFrame(() => applyFilters());
+    });
   }
 
   // attach click + keyboard handlers to filter items
@@ -126,7 +153,18 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // initial apply (show all)
-  applyFilters();
+  const allImgs = Array.from(document.querySelectorAll(".imgcrop1"));
+
+  Promise.all(
+    allImgs.map((img) => {
+      if (img.complete) return Promise.resolve();
+      return new Promise((resolve) =>
+        img.addEventListener("load", resolve, { once: true }),
+      );
+    }),
+  ).then(() => {
+    requestAnimationFrame(() => applyFilters());
+  });
 
   // --- image hover scaling logic (unchanged except uses imageEls) ---
   document.querySelectorAll(".images").forEach((el) => {
@@ -159,4 +197,3 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
-
