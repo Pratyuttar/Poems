@@ -82,7 +82,7 @@ body {
   backdrop-filter: blur(4px);
 }
 .fa-fulcrum {
-  font-size: 40px;
+  font-size: 60px;
   margin-right: 10px;
 }
 /* headers hidden initially */
@@ -254,3 +254,4 @@ body {
     height: auto;
   }
 }
+
