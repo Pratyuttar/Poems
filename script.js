@@ -47,24 +47,48 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // apply filters to images
   function applyFilters() {
+    // 1. Record positions ONLY for currently visible elements
+    const firstPositions = new Map();
+    imageEls.forEach((el) => {
+      if (getComputedStyle(el).display !== "none") {
+        firstPositions.set(el, el.getBoundingClientRect());
+      }
+    });
+
+    // 2. Apply filter (instant layout change)
     imageEls.forEach((img) => {
       let visible = true;
+
       for (const key in activeFilters) {
         const want = activeFilters[key];
         if (!want) continue;
-        const attr = img.dataset[key]; // e.g. "black colorful"
-        if (!attr) {
-          visible = false;
-          break;
-        }
-        const has = attr.split(/\s+/).includes(want);
-        if (!has) {
+
+        const attr = img.dataset[key];
+        if (!attr || !attr.split(/\s+/).includes(want)) {
           visible = false;
           break;
         }
       }
-      img.classList.toggle("hidden", !visible);
-      img.setAttribute("aria-hidden", String(!visible));
+
+      img.style.display = visible ? "" : "none";
+    });
+
+    // 3. Animate ONLY elements that existed before
+    firstPositions.forEach((first, el) => {
+      const last = el.getBoundingClientRect();
+
+      const dx = first.left - last.left;
+      const dy = first.top - last.top;
+
+      if (dx || dy) {
+        el.style.transition = "none";
+        el.style.transform = `translate(${dx}px, ${dy}px)`;
+
+        requestAnimationFrame(() => {
+          el.style.transition = "transform 600ms ease";
+          el.style.transform = "";
+        });
+      }
     });
   }
   function updateCategoryBadges() {
@@ -97,7 +121,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     applyFilters();
-    updateCategoryBadges();
   }
 
   // attach click + keyboard handlers to filter items

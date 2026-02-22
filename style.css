@@ -186,29 +186,20 @@ body {
   aspect-ratio: 9/16;
   cursor: pointer;
   --scale: 1;
-  will-change: transform;
+  will-change: transform, opacity;
   transition:
-    transform 160ms cubic-bezier(0.22, 0.61, 0.36, 1),
-    box-shadow 120ms ease-out,
-    opacity 250ms ease,
-    transform 250ms ease;
+    opacity 0.8s ease,
+    transform 0.8s ease;
+  /* ensure element participates in layout */
+  display: block;
 }
 
 .images.hidden {
   opacity: 0;
   transform: scale(0.96);
   pointer-events: none;
-  box-shadow: none;
-
-  position: absolute; /* REMOVE from grid flow */
-  height: 0;
-  overflow: hidden;
-
-  transition:
-    opacity 0.25s ease,
-    transform 0.25s ease;
+  /* DO NOT set display:none here — JS will set it after the transition */
 }
-
 .images.hidden:hover {
   transform: scale(0.96);
   box-shadow: none;
